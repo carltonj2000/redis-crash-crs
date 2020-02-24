@@ -5,7 +5,7 @@ const redis = require("redis");
 const methodOverride = require("method-override");
 const exphbs = require("express-handlebars");
 
-const winston = require("./config/winston");
+const logger = require("./config/winston");
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,7 +17,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 app.use(methodOverride("_method"));
-app.use(morgan("tiny", { stream: winston.stream }));
+app.use(morgan("tiny", { stream: logger.stream }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", express.static(path.join(__dirname, "./views")));

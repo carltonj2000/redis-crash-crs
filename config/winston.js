@@ -1,35 +1,31 @@
 const appRoot = require("app-root-path");
 const winston = require("winston");
 
-var options = {
-  file: {
-    level: "info",
-    filename: `${appRoot}/logs/app.log`,
-    handleExceptions: true,
-    json: true,
-    maxsize: 1024, //
-    maxFiles: 3,
-    colorize: false
-  },
-  console: {
+const transports = [
+  new winston.transports.Console({
     level: "debug",
-    handleExceptions: true,
-    json: false,
-    colorize: true
-  }
-};
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple()
+    )
+  })
+];
 
-const logger = new winston.createLogger({
-  transports: [
-    new winston.transports.File(options.file),
-    new winston.transports.Console(options.console)
-  ],
-  exitOnError: false
-});
+const logToFile = true;
+if (logToFile)
+  transports.push(
+    new winston.transports.File({
+      filename: `${appRoot}/logs/app.log`,
+      level: "info",
+      maxsize: 1024,
+      maxFiles: 2,
+      format: winston.format.json()
+    })
+  );
+
+const logger = new winston.createLogger({ transports, exitOnError: false });
 
 logger.stream = {
-  write: function(message, encoding) {
-    logger.info(message);
-  }
+  write: (message, encoding) => logger.info(message.trim())
 };
 module.exports = logger;
