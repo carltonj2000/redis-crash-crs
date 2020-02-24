@@ -1,0 +1,27 @@
+{
+  "name": "redis-crash-crs",
+  "version": "1.0.0",
+  "description": "The code is this repository is based on the [Redis Crash Course Tutorial](https://www.youtube.com/watch?v=Hbt56gFj998) video.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "redis:up": "docker-compose up",
+    "redis:down": "docker-compose down",
+    "redis:cli": "docker exec -it redis-crash-crs_nodeCache_1 redis-cli"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "method-override": "^3.0.0",
+    "morgan": "^1.9.1",
+    "redis": "^3.0.2",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
